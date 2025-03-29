@@ -34,12 +34,13 @@ plot_women <- function(birds_grouped, fullrange=FALSE) {
 	return(g)
 }
 
+# Population of Europe + Canada + USA + Australia + New Zealand / World population, based on https://www.worldometers.info/world-population/ . Mexico is not considered western in the paper. 
 proportion_nonwestern <- function() {
 	return(1-(744575504+347275807+40126723+26974026+5251899) / 8213958603)
 }
 
 plot_nonwestern <- function(birds_grouped, fullrange=FALSE) {
-	g <- ggplot(birds_grouped, aes(x=YEAR, y=proportion_nonwestern)) + geom_point(alpha=0.5) + geom_smooth(data=subset(birds_grouped, YEAR>=1900), method="lm", fullrange=fullrange) + labs("Proportion of non-Western people in eponyms", x="Year", y="Proportion of non-Western") + theme_minimal() + ylim(0, 1) + geom_hline(yintercept=0.5, linetype="dashed", color="red") + geom_hline(yintercept=proportion_nonwestern(), linetype="dashed", color="red")+ theme(legend.position = "none") # Population of Europe + Canada + USA + Australia + New Zealand / World population, based on https://www.worldometers.info/world-population/ . Mexico is not considered western in the paper. 
+	g <- ggplot(birds_grouped, aes(x=YEAR, y=proportion_nonwestern)) + geom_point(alpha=0.5) + geom_smooth(data=subset(birds_grouped, YEAR>=1900), method="lm", fullrange=fullrange) + labs("Proportion of non-Western people in eponyms", x="Year", y="Proportion of non-Western") + theme_minimal() + ylim(0, 1) + geom_hline(yintercept=0.5, linetype="dashed", color="red") + geom_hline(yintercept=proportion_nonwestern(), linetype="dashed", color="red")+ theme(legend.position = "none") 
 	ggsave(g, filename=ifelse(!fullrange, "output/nonwestern_now.jpg", "output/nonwestern_future.jpg"), width=6, height=4, dpi=300)
 	return(g)
 }
